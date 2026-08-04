@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AccessLearn</title>
+</head>
+
+<body>
+  <h1>AccessLearn</h1>
+
+  <h2>Upload your study PDF</h2>
+
+  <input type="file" id="pdfFile" accept=".pdf">
+
+  <button id="uploadBtn">Upload PDF</button>
+
+  <p id="status"></p>
+
+  <script>
+    const fileInput = document.getElementById("pdfFile");
+    const uploadBtn = document.getElementById("uploadBtn");
+    const status = document.getElementById("status");
+
+    uploadBtn.addEventListener("click", async () => {
+      const file = fileInput.files[0];
+
+      if (!file) {
+        status.textContent = "Please select a PDF.";
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("pdf", file);
+
+      status.textContent = "Uploading...";
+
+      try {
+        const response = await fetch("http://localhost:3000/api/upload", {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await response.json();
+
+        status.textContent = data.message;
+      } catch (error) {
+        status.textContent = "Upload failed.";
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>
