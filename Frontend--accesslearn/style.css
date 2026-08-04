@@ -1,0 +1,218 @@
+/* ===== AccessLearn Theme ===== */
+
+:root{
+    --background:#F4F8FC;
+    --card:#FFFFFF;
+    --primary:#4A90E2;
+    --primary-dark:#357ABD;
+    --text:#2D3748;
+    --border:#D9E2EC;
+    --success:#6FCF97;
+}
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Main page */
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:var(--background);
+    color:var(--text);
+}
+/* Header */
+header {
+    text-align: center;
+    padding: 40px 20px 20px;
+}
+header h1{
+    color:var(--primary);
+    font-size:42px;
+    margin-bottom:12px;
+}
+header p {
+    font-size: 18px;
+}
+/* Main content card */
+main {
+    width: 90%;
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 45px;
+    background: var(--card);
+    border-radius: 16px;
+    text-align: center;
+    border: 1px solid var(--border);
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.08);
+}
+/* Main heading */
+main h2 {
+    font-size: 28px;
+    margin-bottom: 18px;
+}
+/* Description */
+main p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+/* File input */
+input[type="file"] {
+    display: block;
+    width: 100%;
+    margin-bottom: 25px;
+    padding: 12px;
+    font-size: 16px;
+}
+/* Upload button */
+button{
+    padding:14px 28px;
+    font-size:18px;
+    font-weight:bold;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    background: var(--primary);
+    color:white;
+    transition:0.3s;
+}button:hover{
+    background: var(--primary-dark);
+}
+/* Upload box */
+.upload-box{
+    border:2px dashed var(--primary);
+    background:#F9FBFF;
+    border-radius:14px;
+    padding:35px 25px;
+    margin-top:30px;
+}
+/* Upload icon */
+.upload-icon {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+/* Upload box heading */
+.upload-box h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+/* Upload box description */
+.upload-box p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+/* Hide default file input */
+#pdfUpload {
+    display: none;
+}
+/* Choose PDF button */
+.choose-file-button {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+/* Selected file name */
+#fileName {
+    font-size: 15px;
+    margin-top: 10px;
+}
+/* Upload button */
+#uploadButton {
+    display: block;
+    margin: 20px auto 0;
+}
+/* Accessibility Toolbar */
+.accessibility-tools{
+display:flex;
+justify-content:center;
+gap:12px;
+margin:30px 0;
+flex-wrap:wrap;
+}
+/* Summary Box */
+.summary-box{
+background:white;
+padding:30px;
+border-radius:12px;
+line-height:2;
+font-size:18px;
+text-align:left;
+margin-bottom:30px;
+}
+/* Quiz Button */
+.quiz-button{
+display:block;
+margin:auto;
+padding:15px 30px;
+font-size:18px;
+}
+main{
+    animation:fadeIn .8s ease;
+}@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+/*Processing Page*/
+.loader{
+    width:60px;
+    height:60px;
+    border:6px solid #D9E2EC;
+    border-top:6px solid var(--primary);
+    border-radius:50%;
+    margin:35px auto;
+    animation:spin 1s linear infinite;
+}
+@keyframes spin{
+    0%{
+        transform:rotate(0deg);
+    }
+    100%{
+        transform:rotate(360deg);
+    }
+}
+.tip{
+    margin-top:25px;
+    color:#666;
+    font-size:16px;
+}
+/*Quiz Page */
+.question-number{
+    color:#666;
+    margin-bottom:20px;
+}
+.question-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:30px;
+    text-align:left;
+    margin-bottom:30px;
+}
+.question-card h3{
+    margin-bottom:25px;
+}
+.option{
+    display:block;
+    padding:15px;
+    margin-bottom:15px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+.option:hover{
+    background:#EEF5FF;
+    border-color:var(--primary);
+}
