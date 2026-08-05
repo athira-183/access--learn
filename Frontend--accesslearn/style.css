@@ -216,3 +216,23 @@ transform:translateY(0);
     background:#EEF5FF;
     border-color:var(--primary);
 }
+/* Results Page*/
+.result-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:35px;
+    margin:35px auto;
+    max-width:450px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+.score{
+    font-size:48px;
+    color:var(--primary);
+    font-weight:bold;
+    margin:25px 0;
+}
+.feedback{
+    font-size:18px;
+    line-height:1.8;
+}
