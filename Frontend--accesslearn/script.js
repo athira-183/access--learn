@@ -3,27 +3,28 @@ const fileName = document.getElementById("fileName");
 const uploadButton = document.getElementById("uploadButton");
 
 // Show selected file name
-pdfUpload.addEventListener("change", function () {
+if (pdfUpload && fileName) {
+    pdfUpload.addEventListener("change", function () {
 
-    if (pdfUpload.files.length > 0) {
-        fileName.textContent = pdfUpload.files[0].name;
-    } else {
-        fileName.textContent = "No file selected";
-    }
+        if (pdfUpload.files.length > 0) {
+            fileName.textContent = pdfUpload.files[0].name;
+        } else {
+            fileName.textContent = "No file selected";
+        }
 
-});
+    });
+}
 
 // Upload button
-uploadButton.addEventListener("click", function () {
+if (uploadButton && pdfUpload) {
+    uploadButton.addEventListener("click", function () {
 
-    if (pdfUpload.files.length === 0) {
+        if (pdfUpload.files.length === 0) {
+            alert("Please select a PDF first.");
+            return;
+        }
 
-        alert("Please select a PDF first.");
+        window.location.href = "processing.html";
 
-        return;
-
-    }
-
-    window.location.href = "processing.html";
-
-});
+    });
+}
