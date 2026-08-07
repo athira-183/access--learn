@@ -8,6 +8,13 @@ const { PDFParse } = require("pdf-parse");
 const { createWorker } = require("tesseract.js");
 const cors = require("cors");
 
+require("dotenv").config();
+const OpenAI = require("openai");
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
 const app = express();
 app.use(cors());
 
@@ -162,19 +169,33 @@ app.post("/api/upload", upload.single("pdf"), async (req, res) => {
 });
 
 // API for sending extracted text to AI module
-app.post("/api/ai/process", (req, res) => {
-    const { text } = req.body;
+app.post("/api/ai/process", async (req, res) => {
+    try {
+        const { text } = req.body;
 
-    if (!text) {
-        return res.status(400).json({
-            message: "No text provided"
+        if (!text) {
+            return res.status(400).json({
+                message: "No text provided"
+            });
+        }
+
+        const response = await openai.responses.create({
+            model: "gpt-5.5",
+            input: `Summarize this text in simple language:\n\n${text}`,
+        });
+
+        res.json({
+            summary: response.output_text,
+        });
+
+    } catch (error) {
+        console.error("AI processing error:", error);
+
+        res.status(500).json({
+            message: "Failed to process text.",
+            error: error.message,
         });
     }
-
-    res.json({
-        message: "Text successfully sent to AI module",
-        text: text
-    });
 });
 
 // Start server

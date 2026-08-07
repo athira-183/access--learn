@@ -12,8 +12,10 @@
   "type": "commonjs",
   "dependencies": {
     "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "multer": "^2.2.0",
-    "pdf-parse": "^2.4.5"
+    "pdf-parse": "^2.4.5",
+    "tesseract.js": "^7.0.0"
   }
 }
