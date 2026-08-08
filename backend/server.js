@@ -60,12 +60,13 @@ async function runOCR(pdfPath) {
     const outputPrefix = path.join("uploads", "ocr", uniqueName);
 
     await execFileAsync("pdftoppm", [
-        "-png",
-        "-r",
-        "200",
-        pdfPath,
-        outputPrefix
-    ]);
+    "-png",
+    "-r",
+    "300",
+    "-gray",
+    pdfPath,
+    outputPrefix
+]);
 
     const imageFiles = fs.readdirSync(path.join("uploads", "ocr"))
         .filter(file => file.startsWith(uniqueName) && file.endsWith(".png"))

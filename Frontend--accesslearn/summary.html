@@ -35,20 +35,25 @@
 
     </div>
 
-    <div class="summary-box">
+    <div class="summary-box" id="summaryBox">
+    <p>Loading extracted text...</p>
+</div>
 
-        <p>
+<script>
+    const extractedText = sessionStorage.getItem("extractedText");
+    const summaryBox = document.getElementById("summaryBox");
 
-            This is where the AI-generated simplified notes
-            will appear after processing the uploaded PDF.
+    if (extractedText) {
+        summaryBox.innerHTML = "";
 
-            <br><br>
+        const p = document.createElement("p");
+        p.textContent = extractedText;
 
-            For now this is placeholder text.
-
-        </p>
-
-    </div>
+        summaryBox.appendChild(p);
+    } else {
+        summaryBox.innerHTML = "<p>No extracted text found.</p>";
+    }
+</script>
 
    <button class="quiz-button" onclick="location.href='quiz.html'">
 
