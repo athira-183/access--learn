@@ -39,21 +39,7 @@
     <p>Loading extracted text...</p>
 </div>
 
-<script>
-    const extractedText = sessionStorage.getItem("extractedText");
-    const summaryBox = document.getElementById("summaryBox");
 
-    if (extractedText) {
-        summaryBox.innerHTML = "";
-
-        const p = document.createElement("p");
-        p.textContent = extractedText;
-
-        summaryBox.appendChild(p);
-    } else {
-        summaryBox.innerHTML = "<p>No extracted text found.</p>";
-    }
-</script>
 
    <button class="quiz-button" onclick="location.href='quiz.html'">
 

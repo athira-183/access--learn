@@ -179,10 +179,27 @@ app.post("/api/ai/process", async (req, res) => {
                 message: "No text provided"
             });
         }
-
+        console.log("Extracted text length:", text.length);
         const response = await openai.responses.create({
             model: "gpt-5.5",
-            input: `Summarize this text in simple language:\n\n${text}`,
+            input: `You are an educational assistant helping students with dyslexia.
+
+Create simplified study notes from the following study material.
+
+Requirements:
+- Cover every major topic from the entire material.
+- Do not leave out major topics just to make the notes shorter.
+- Use clear headings for different topics.
+- Use bullet points under each heading.
+- Explain difficult words using simple language.
+- Keep sentences short and easy to read.
+- Include important definitions, formulas, laws, examples, and key facts.
+- Remove unnecessary repetition.
+- Keep the information accurate to the provided material.
+- Make the notes detailed enough for a student to study from.
+- For a document of this length, aim for approximately 400–700 words.
+
+Study material:\n\n${text}`,
         });
 
         res.json({

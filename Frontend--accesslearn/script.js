@@ -51,9 +51,30 @@ if (uploadButton && pdfUpload) {
             if (!response.ok) {
                 throw new Error(result.message || "Upload failed");
             }
+        //Send extracted text to AI
+            const aiResponse = await fetch(
+    "http://localhost:3000/api/ai/process",
+    {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            text: result.text
+        })
+    }
+);
 
-            // Temporarily store extracted text
-            sessionStorage.setItem("extractedText", result.text);
+const aiResult = await aiResponse.json();
+
+if (!aiResponse.ok) {
+    throw new Error(aiResult.message || "AI processing failed");
+}
+
+sessionStorage.setItem("summary", aiResult.summary);
+
+            
+           
 
             // Move to processing page
             window.location.href = "processing.html";
@@ -68,4 +89,16 @@ if (uploadButton && pdfUpload) {
             uploadButton.textContent = "Upload PDF";
         }
     });
+}
+
+const summaryBox = document.getElementById("summaryBox");
+
+if (summaryBox) {
+    const summary = sessionStorage.getItem("summary");
+
+    if (summary) {
+        summaryBox.innerHTML = summary;
+    } else {
+        summaryBox.innerHTML = "<p>No summary available.</p>";
+    }
 }
