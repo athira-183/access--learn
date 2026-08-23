@@ -66,6 +66,28 @@ if (uploadButton && pdfUpload) {
 );
 
 const aiResult = await aiResponse.json();
+// Send extracted text to AI for quiz generation
+const quizResponse = await fetch(
+    "http://localhost:3000/api/ai/quiz",
+    {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            text: result.text
+        })
+    }
+);
+
+const quizResult = await quizResponse.json();
+
+if (!quizResponse.ok) {
+    throw new Error(quizResult.message || "Quiz generation failed");
+}
+
+console.log("Generated quiz:", quizResult.quiz);
+sessionStorage.setItem("quiz", quizResult.quiz);
 
 if (!aiResponse.ok) {
     throw new Error(aiResult.message || "AI processing failed");
@@ -97,8 +119,31 @@ if (summaryBox) {
     const summary = sessionStorage.getItem("summary");
 
     if (summary) {
-        summaryBox.innerHTML = summary;
+
+        const formattedSummary = summary
+            // Convert ## headings
+            .replace(/^## (.+)$/gm, "<h3>$1</h3>")
+
+            // Convert ### headings
+            .replace(/^### (.+)$/gm, "<h4>$1</h4>")
+
+            // Convert bullet points
+            .replace(/^- (.+)$/gm, "<li>$1</li>")
+
+            // Convert bold text
+            .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+
+            // Add a list around consecutive bullet points
+            .replace(/(<li>.*<\/li>\s*)+/g, "<ul>$&</ul>")
+
+            // Convert remaining line breaks
+            .replace(/\n/g, "<br>");
+
+        summaryBox.innerHTML = formattedSummary;
+
     } else {
+
         summaryBox.innerHTML = "<p>No summary available.</p>";
+
     }
 }

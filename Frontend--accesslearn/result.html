@@ -26,17 +26,9 @@
 
         <h3>Your Score</h3>
 
-        <p class="score">8 / 10</p>
+        <p class="score" id="score">Loading...</p>
 
-        <p class="feedback">
-
-            Excellent Work! 🌟
-
-            <br><br>
-
-            Keep learning and improving.
-
-        </p>
+        <p class="feedback" id="feedback"></p>
 
     </div>
 
@@ -47,6 +39,48 @@
     </button>
 
 </main>
+
+<script>
+
+const score = sessionStorage.getItem("quizScore");
+const total = sessionStorage.getItem("quizTotal");
+
+const scoreElement = document.getElementById("score");
+const feedbackElement = document.getElementById("feedback");
+
+if (score !== null && total !== null) {
+
+    scoreElement.textContent = `${score} / ${total}`;
+
+    const percentage = (Number(score) / Number(total)) * 100;
+
+    if (percentage >= 80) {
+
+        feedbackElement.innerHTML =
+            "Excellent Work! 🌟<br><br>Keep learning and improving.";
+
+    } else if (percentage >= 50) {
+
+        feedbackElement.innerHTML =
+            "Good Job! 👍<br><br>Keep practicing and improving.";
+
+    } else {
+
+        feedbackElement.innerHTML =
+            "Good effort! 💪<br><br>Keep learning and try again.";
+
+    }
+
+} else {
+
+    scoreElement.textContent = "Score unavailable";
+
+    feedbackElement.textContent =
+        "Please complete the quiz again.";
+
+}
+
+</script>
 
 </body>
 </html>

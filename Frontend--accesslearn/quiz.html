@@ -18,44 +18,200 @@
 
     <h2>Quiz Time! 📝</h2>
 
-    <p class="question-number">
-        Question 1 of 10
+    <p class="question-number" id="questionNumber">
+        Question 1 of 5
     </p>
 
     <div class="question-card">
 
-        <h3>
-            What is the primary function of the CPU?
+        <h3 id="questionText">
+            Loading question...
         </h3>
 
-        <label class="option">
-            <input type="radio" name="quiz">
-            Processes instructions
-        </label>
+        <div id="optionsContainer"></div>
 
-        <label class="option">
-            <input type="radio" name="quiz">
-            Stores files permanently
-        </label>
-
-        <label class="option">
-            <input type="radio" name="quiz">
-            Displays images
-        </label>
-
-        <label class="option">
-            <input type="radio" name="quiz">
-            Connects to the Internet
-        </label>
+        <div id="feedback" style="margin-top: 20px;"></div>
 
     </div>
 
-    <button class="quiz-button" onclick="location.href='result.html'">
+    <button class="quiz-button" id="nextButton">
+        Check Answer
+    </button>
 
-Next →
-
-</button>
 </main>
+
+<script>
+
+let questions = [];
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
+
+const savedQuiz = sessionStorage.getItem("quiz");
+
+if (savedQuiz) {
+
+    try {
+
+        const quizData = JSON.parse(savedQuiz);
+
+        questions = quizData.questions;
+
+        showQuestion();
+
+    } catch (error) {
+
+        console.error("Could not read quiz:", error);
+
+        document.getElementById("questionText").textContent =
+            "Unable to load quiz.";
+
+    }
+
+} else {
+
+    document.getElementById("questionText").textContent =
+        "No quiz available. Please upload a PDF first.";
+
+}
+
+
+function showQuestion() {
+
+    const question = questions[currentQuestion];
+
+    answered = false;
+
+    document.getElementById("questionNumber").textContent =
+        `Question ${currentQuestion + 1} of ${questions.length}`;
+
+    document.getElementById("questionText").textContent =
+        question.question;
+
+    const optionsContainer =
+        document.getElementById("optionsContainer");
+
+    optionsContainer.innerHTML = "";
+
+    const feedback =
+        document.getElementById("feedback");
+
+    feedback.innerHTML = "";
+
+    question.options.forEach((option, index) => {
+
+        const label = document.createElement("label");
+
+        label.className = "option";
+
+        label.innerHTML = `
+            <input
+                type="radio"
+                name="quiz"
+                value="${index}"
+            >
+            ${option}
+        `;
+
+        optionsContainer.appendChild(label);
+
+    });
+
+    document.getElementById("nextButton").textContent =
+        "Check Answer";
+
+}
+
+
+document.getElementById("nextButton").addEventListener("click", () => {
+
+    const question = questions[currentQuestion];
+
+    if (!answered) {
+
+        const selected =
+            document.querySelector('input[name="quiz"]:checked');
+
+        if (!selected) {
+
+            alert("Please select an answer first.");
+
+            return;
+        }
+
+        const selectedIndex =
+            Number(selected.value);
+
+        const selectedAnswer =
+            question.options[selectedIndex];
+
+        const feedback =
+            document.getElementById("feedback");
+
+        if (selectedAnswer === question.correctAnswer) {
+
+            score++;
+
+            feedback.innerHTML = `
+                <p style="color: green;">
+                    ✅ <strong>Correct!</strong>
+                </p>
+
+                <p>
+                    <strong>Why:</strong>
+                    ${question.explanation}
+                </p>
+            `;
+
+        } else {
+
+            feedback.innerHTML = `
+                <p style="color: red;">
+                    ❌ <strong>Incorrect.</strong>
+                </p>
+
+                <p>
+                    <strong>Correct answer:</strong>
+                    ${question.correctAnswer}
+                </p>
+
+                <p>
+                    <strong>Why:</strong>
+                    ${question.explanation}
+                </p>
+            `;
+
+        }
+
+        answered = true;
+
+        document.getElementById("nextButton").textContent =
+            currentQuestion < questions.length - 1
+                ? "Next →"
+                : "See Result";
+
+    } else {
+
+        if (currentQuestion < questions.length - 1) {
+
+            currentQuestion++;
+
+            showQuestion();
+
+        } else {
+
+            sessionStorage.setItem("quizScore", score);
+            sessionStorage.setItem("quizTotal", questions.length);
+
+            location.href = "result.html";
+
+        }
+
+    }
+
+});
+
+</script>
 
 </body>
 </html>

@@ -190,12 +190,16 @@ Requirements:
 - Cover every major topic from the entire material.
 - Do not leave out major topics just to make the notes shorter.
 - Use clear headings for different topics.
-- Use bullet points under each heading.
+- Under EVERY heading, use bullet points.
+- Do NOT write long paragraphs.
+- Each bullet point should contain one main idea.
+- Keep bullet points short and easy to read.
 - Explain difficult words using simple language.
-- Keep sentences short and easy to read.
+- Keep sentences short and easy to understand.
 - Include important definitions, formulas, laws, examples, and key facts.
 - Remove unnecessary repetition.
 - Keep the information accurate to the provided material.
+- Do not add information that is not present in the material.
 - Make the notes detailed enough for a student to study from.
 - For a document of this length, aim for approximately 400–700 words.
 
@@ -215,7 +219,73 @@ Study material:\n\n${text}`,
         });
     }
 });
+// API for generating quiz from extracted study material
+app.post("/api/ai/quiz", async (req, res) => {
+    try {
+        const { text } = req.body;
 
+        if (!text) {
+            return res.status(400).json({
+                message: "No text provided"
+            });
+        }
+
+        const response = await openai.responses.create({
+            model: "gpt-5.5",
+            input: `You are an educational assistant creating quizzes for students with dyslexia.
+
+Create a quiz using ONLY the information provided in the study material below.
+
+Requirements:
+- Create 10 multiple-choice questions.
+- Each question must have exactly 4 options.
+- Only one option must be correct.
+- Include the correct answer for every question.
+- Include a short and simple explanation for why the correct answer is correct.
+- Questions must be based directly on the study material.
+- Do not add information that is not present in the study material.
+- Use simple and clear English.
+- Keep questions short and easy to understand.
+- Avoid confusing or tricky questions.
+
+Return the quiz in this exact JSON format:
+
+{
+  "questions": [
+    {
+      "question": "Question text",
+      "options": [
+        "Option 1",
+        "Option 2",
+        "Option 3",
+        "Option 4"
+      ],
+      "correctAnswer": "Correct option",
+      "explanation": "A short and simple explanation of why this answer is correct."
+    }
+  ]
+}
+
+Study material:
+
+${text}`,
+        });
+
+        const quizText = response.output_text;
+
+        res.json({
+            quiz: quizText
+        });
+
+    } catch (error) {
+        console.error("AI quiz generation error:", error);
+
+        res.status(500).json({
+            message: "Failed to generate quiz.",
+            error: error.message
+        });
+    }
+});
 // Start server
 app.listen(PORT, () => {
     console.log(`AccessLearn server is running on port ${PORT}`);

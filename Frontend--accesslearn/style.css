@@ -236,3 +236,14 @@ transform:translateY(0);
     font-size:18px;
     line-height:1.8;
 }
+
+/* Compact bullet points for simplified notes */
+#summaryBox ul {
+    margin: 5px 0 12px 0;
+    padding-left: 25px;
+}
+
+#summaryBox li {
+    margin-bottom: 3px;
+    line-height: 1.3;
+}
