@@ -144,3 +144,4 @@ vite.config.ts.timestamp-*
 # Uploaded study PDFs
 backend/uploads/
 *.pdf
+**/.env
