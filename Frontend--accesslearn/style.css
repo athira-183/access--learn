@@ -135,15 +135,65 @@ gap:12px;
 margin:30px 0;
 flex-wrap:wrap;
 }
-/* Summary Box */
-.summary-box{
-background:white;
-padding:30px;
-border-radius:12px;
-line-height:2;
-font-size:18px;
-text-align:left;
-margin-bottom:30px;
+/* ===== Summary Box ===== */
+
+.summary-box {
+    background: var(--card);
+    padding: 32px 38px;
+    border-radius: 16px;
+    line-height: 1.6;
+    font-size: 18px;
+    text-align: left;
+    margin-bottom: 30px;
+    border: 1px solid var(--border);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+/* Make summary page wider */
+main:has(.summary-box) {
+    max-width: 850px;
+    text-align: left;
+}
+
+/* Main section headings */
+.summary-box h3 {
+    color: var(--primary);
+    font-size: 24px;
+    margin: 28px 0 14px;
+    padding: 12px 16px;
+    background: var(--background);
+    border-left: 5px solid var(--primary);
+    border-radius: 8px;
+}
+
+/* Subheadings */
+.summary-box h4 {
+    font-size: 20px;
+    margin: 20px 0 10px;
+    color: var(--text);
+}
+
+/* Bullet lists */
+.summary-box ul {
+    margin: 8px 0 18px;
+    padding-left: 28px;
+}
+
+/* Individual bullet */
+.summary-box li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding-left: 4px;
+}
+
+/* Important words */
+.summary-box strong {
+    color: var(--primary);
+}
+
+/* First heading shouldn't have a huge gap */
+.summary-box h3:first-child {
+    margin-top: 0;
 }
 /* Quiz Button */
 .quiz-button{
@@ -237,16 +287,6 @@ transform:translateY(0);
     line-height:1.8;
 }
 
-/* Compact bullet points for simplified notes */
-#summaryBox ul {
-    margin: 5px 0 12px 0;
-    padding-left: 25px;
-}
-
-#summaryBox li {
-    margin-bottom: 3px;
-    line-height: 1.3;
-}
 /* ===== Dark Mode ===== */
 
 body.dark-mode {

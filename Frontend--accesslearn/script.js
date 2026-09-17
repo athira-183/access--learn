@@ -135,9 +135,10 @@ if (summaryBox) {
 
             // Add a list around consecutive bullet points
             .replace(/(<li>.*<\/li>\s*)+/g, "<ul>$&</ul>")
-
+            
             // Convert remaining line breaks
-            .replace(/\n/g, "<br>");
+            .replace(/\n/g, "<br>")
+            .replace(/<\/(h3|h4|li|ul)><br>/g, "</$1>");
 
         summaryBox.innerHTML = formattedSummary;
 
