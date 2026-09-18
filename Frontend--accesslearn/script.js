@@ -148,6 +148,35 @@ if (summaryBox) {
 
     }
 }
+// ===== Font Size Controls =====
+
+const decreaseFont = document.getElementById("decreaseFont");
+const resetFont = document.getElementById("resetFont");
+const increaseFont = document.getElementById("increaseFont");
+
+let currentFontSize = 18;
+
+if (decreaseFont && resetFont && increaseFont && summaryBox) {
+
+    decreaseFont.addEventListener("click", () => {
+        if (currentFontSize > 14) {
+            currentFontSize -= 2;
+            summaryBox.style.fontSize = currentFontSize + "px";
+        }
+    });
+
+    resetFont.addEventListener("click", () => {
+        currentFontSize = 18;
+        summaryBox.style.fontSize = currentFontSize + "px";
+    });
+
+    increaseFont.addEventListener("click", () => {
+        if (currentFontSize < 26) {
+            currentFontSize += 2;
+            summaryBox.style.fontSize = currentFontSize + "px";
+        }
+    });
+}
 // ===== Theme Toggle =====
 
 const themeToggle = document.getElementById("themeToggle");
