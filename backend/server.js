@@ -7,6 +7,7 @@ const { promisify } = require("util");
 const { PDFParse } = require("pdf-parse");
 const { createWorker } = require("tesseract.js");
 const cors = require("cors");
+const sharp = require("sharp");
 
 require("dotenv").config();
 const OpenAI = require("openai");
@@ -57,19 +58,28 @@ const upload = multer({
 // OCR scanned PDFs with Poppler + Tesseract
 async function runOCR(pdfPath) {
     const uniqueName = `page-${Date.now()}`;
-    const outputPrefix = path.join("uploads", "ocr", uniqueName);
+    const outputDir = path.join("uploads", "ocr");
+    const outputPrefix = path.join(outputDir, uniqueName);
 
+    if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir, { recursive: true });
+    }
+
+    // Convert PDF pages to high-resolution PNG images
     await execFileAsync("pdftoppm", [
-    "-png",
-    "-r",
-    "300",
-    "-gray",
-    pdfPath,
-    outputPrefix
-]);
+        "-png",
+        "-r",
+        "400",
+        "-gray",
+        pdfPath,
+        outputPrefix
+    ]);
 
-    const imageFiles = fs.readdirSync(path.join("uploads", "ocr"))
-        .filter(file => file.startsWith(uniqueName) && file.endsWith(".png"))
+    const imageFiles = fs.readdirSync(outputDir)
+        .filter(file =>
+            file.startsWith(uniqueName) &&
+            file.endsWith(".png")
+        )
         .sort();
 
     if (imageFiles.length === 0) {
@@ -81,18 +91,46 @@ async function runOCR(pdfPath) {
 
     try {
         for (const imageFile of imageFiles) {
-            const imagePath = path.join("uploads", "ocr", imageFile);
+
+            const imagePath = path.join(outputDir, imageFile);
 
             console.log(`Reading scanned page: ${imageFile}`);
 
-            const result = await worker.recognize(imagePath);
+            // Create a cleaned image for OCR
+            const processedImagePath = path.join(
+                outputDir,
+                `processed-${imageFile}`
+            );
+
+            await sharp(imagePath)
+                .grayscale()
+                .normalize()
+                .sharpen()
+                .png()
+                .toFile(processedImagePath);
+
+            console.log(`Running OCR on: ${processedImagePath}`);
+
+            await worker.setParameters({
+                tessedit_pageseg_mode: "6",
+                preserve_interword_spaces: "1"
+            });
+
+            const result = await worker.recognize(processedImagePath);
+
             extractedText += result.data.text + "\n";
+
+            // Delete processed image
+            if (fs.existsSync(processedImagePath)) {
+                fs.unlinkSync(processedImagePath);
+            }
         }
     } finally {
         await worker.terminate();
 
+        // Delete original OCR images
         for (const imageFile of imageFiles) {
-            const imagePath = path.join("uploads", "ocr", imageFile);
+            const imagePath = path.join(outputDir, imageFile);
 
             if (fs.existsSync(imagePath)) {
                 fs.unlinkSync(imagePath);
@@ -180,6 +218,9 @@ app.post("/api/ai/process", async (req, res) => {
             });
         }
         console.log("Extracted text length:", text.length);
+        console.log("========== OCR TEXT ==========");
+console.log(text);
+console.log("========== END OCR TEXT ==========");
         const response = await openai.responses.create({
             model: "gpt-5.5",
             input: `You are an educational assistant helping students with dyslexia.

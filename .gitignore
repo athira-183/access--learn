@@ -144,4 +144,8 @@ vite.config.ts.timestamp-*
 # Uploaded study PDFs
 backend/uploads/
 *.pdf
+<<<<<<< Updated upstream
 **/.env
+=======
+.env
+>>>>>>> Stashed changes

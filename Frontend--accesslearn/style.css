@@ -1,3 +1,4 @@
+@import url('https://fonts.cdnfonts.com/css/opendyslexic');
 /* ===== AccessLearn Theme ===== */
 
 :root{
@@ -324,4 +325,19 @@ body.dark-mode .question-number {
     margin-top: 15px;
     padding: 10px 18px;
     font-size: 15px;
+}
+/* Dyslexia-friendly font */
+.dyslexia-font {
+    font-family: "OpenDyslexic", Arial, sans-serif;
+}
+.accessibility-tools {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.accessibility-tools button {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }

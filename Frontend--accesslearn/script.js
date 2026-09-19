@@ -206,3 +206,10 @@ if (themeToggle) {
         themeToggle.textContent = "☀️ Light Mode";
     }
 }
+const dyslexiaFontBtn = document.getElementById("dyslexiaFontBtn");
+
+if (dyslexiaFontBtn) {
+    dyslexiaFontBtn.addEventListener("click", () => {
+        document.body.classList.toggle("dyslexia-font");
+    });
+}
