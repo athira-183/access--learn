@@ -213,3 +213,38 @@ if (dyslexiaFontBtn) {
         document.body.classList.toggle("dyslexia-font");
     });
 }
+
+// ===== Read Aloud =====
+
+const readAloud = document.getElementById("readAloud");
+
+if (readAloud && summaryBox) {
+
+    readAloud.addEventListener("click", () => {
+
+        if (speechSynthesis.speaking) {
+            speechSynthesis.cancel();
+            readAloud.textContent = "🔊 Read Aloud";
+            return;
+        }
+
+        const text = summaryBox.innerText;
+
+        if (!text.trim()) {
+            return;
+        }
+
+        const speech = new SpeechSynthesisUtterance(text);
+
+        speech.rate = 0.9;
+        speech.pitch = 1;
+
+        speech.onend = () => {
+            readAloud.textContent = "🔊 Read Aloud";
+        };
+
+        speechSynthesis.speak(speech);
+
+        readAloud.textContent = "⏹ Stop";
+    });
+}
