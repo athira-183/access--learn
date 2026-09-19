@@ -201,7 +201,7 @@ Requirements:
 - Keep the information accurate to the provided material.
 - Do not add information that is not present in the material.
 - Make the notes detailed enough for a student to study from.
-- For a document of this length, aim for approximately 400–700 words.
+- For a document of this length, aim for approximately 400-700 words.
 
 Study material:\n\n${text}`,
         });
