@@ -213,6 +213,14 @@ if (dyslexiaFontBtn) {
         document.body.classList.toggle("dyslexia-font");
     });
 }
+const atkinsonFontBtn = document.getElementById("atkinsonFontBtn");
+
+if (atkinsonFontBtn) {
+    atkinsonFontBtn.addEventListener("click", () => {
+        document.body.classList.remove("dyslexia-font");
+        document.body.classList.toggle("atkinson-font");
+    });
+}
 
 // ===== Read Aloud =====
 
