@@ -331,9 +331,11 @@ body.dark-mode .question-number {
 .dyslexia-font {
     font-family: "OpenDyslexic", Arial, sans-serif;
 }
-.atkinson-font {
+.atkinson-font,
+.atkinson-font * {
     font-family: "Atkinson Hyperlegible", Arial, sans-serif;
 }
+
 .accessibility-tools {
     display: flex !important;
     visibility: visible !important;
