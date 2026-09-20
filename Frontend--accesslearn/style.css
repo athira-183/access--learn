@@ -356,3 +356,34 @@ textarea:focus {
     outline: 3px solid #1976d2;
     outline-offset: 3px;
 }
+/* High Contrast Mode */
+body.high-contrast {
+    background-color: #000;
+    color: #fff;
+}
+
+body.high-contrast .summary-box,
+body.high-contrast .content-box,
+body.high-contrast .card {
+    background-color: #000;
+    color: #fff;
+    border: 2px solid #fff;
+}
+
+body.high-contrast button {
+    background-color: #000;
+    color: #fff;
+    border: 2px solid #fff;
+}
+
+body.high-contrast a {
+    color: #ffff00;
+}
+
+body.high-contrast h1,
+body.high-contrast h2,
+body.high-contrast h3,
+body.high-contrast p,
+body.high-contrast li {
+    color: #fff;
+}

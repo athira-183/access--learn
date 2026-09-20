@@ -221,6 +221,13 @@ if (atkinsonFontBtn) {
         document.body.classList.toggle("atkinson-font");
     });
 }
+const highContrastBtn = document.getElementById("highContrastBtn");
+
+if (highContrastBtn) {
+    highContrastBtn.addEventListener("click", () => {
+        document.body.classList.toggle("high-contrast");
+    });
+}
 
 // ===== Read Aloud =====
 
