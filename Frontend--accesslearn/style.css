@@ -345,3 +345,12 @@ body.dark-mode .question-number {
     visibility: visible !important;
     opacity: 1 !important;
 }
+/* Keyboard Navigation */
+button:focus,
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 3px solid #1976d2;
+    outline-offset: 3px;
+}
