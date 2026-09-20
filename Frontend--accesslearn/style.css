@@ -356,34 +356,88 @@ textarea:focus {
     outline: 3px solid #1976d2;
     outline-offset: 3px;
 }
-/* High Contrast Mode */
+/* ===== High Contrast Mode ===== */
+
 body.high-contrast {
     background-color: #000;
     color: #fff;
 }
 
+/* Main containers / cards */
+body.high-contrast main,
 body.high-contrast .summary-box,
 body.high-contrast .content-box,
-body.high-contrast .card {
+body.high-contrast .card,
+body.high-contrast .question-card,
+body.high-contrast .result-card {
     background-color: #000;
     color: #fff;
     border: 2px solid #fff;
 }
 
+/* Headings and normal text */
+body.high-contrast h1,
+body.high-contrast h2,
+body.high-contrast h3,
+body.high-contrast h4,
+body.high-contrast p,
+body.high-contrast li,
+body.high-contrast span,
+body.high-contrast label {
+    color: #fff;
+}
+
+/* Summary headings */
+body.high-contrast .summary-box h3 {
+    background-color: #000;
+    color: #fff;
+    border-left: 5px solid #fff;
+}
+
+/* Links */
+body.high-contrast a {
+    color: #ffff00;
+}
+
+/* Buttons */
 body.high-contrast button {
     background-color: #000;
     color: #fff;
     border: 2px solid #fff;
 }
 
-body.high-contrast a {
-    color: #ffff00;
+/* Button hover */
+body.high-contrast button:hover {
+    background-color: #fff;
+    color: #000;
 }
 
-body.high-contrast h1,
-body.high-contrast h2,
-body.high-contrast h3,
-body.high-contrast p,
-body.high-contrast li {
+/* Quiz options */
+body.high-contrast .option {
+    background-color: #000;
     color: #fff;
+    border: 2px solid #fff;
+}
+
+body.high-contrast .option:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+/* Inputs */
+body.high-contrast input,
+body.high-contrast textarea,
+body.high-contrast select {
+    background-color: #000;
+    color: #fff;
+    border: 2px solid #fff;
+}
+
+/* Accessibility / focus */
+body.high-contrast button:focus,
+body.high-contrast a:focus,
+body.high-contrast input:focus,
+body.high-contrast .option:focus {
+    outline: 3px solid #ffff00;
+    outline-offset: 3px;
 }
