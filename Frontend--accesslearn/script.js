@@ -154,28 +154,48 @@ const decreaseFont = document.getElementById("decreaseFont");
 const resetFont = document.getElementById("resetFont");
 const increaseFont = document.getElementById("increaseFont");
 
+const questionCard = document.querySelector(".question-card");
+
 let currentFontSize = 18;
 
-if (decreaseFont && resetFont && increaseFont && summaryBox) {
+// Use Summary box on Summary page
+// Use Question Card on Quiz page
+const accessibilityContent = summaryBox || questionCard;
+
+if (decreaseFont && resetFont && increaseFont && accessibilityContent) {
 
     decreaseFont.addEventListener("click", () => {
+
         if (currentFontSize > 14) {
+
             currentFontSize -= 2;
-            summaryBox.style.fontSize = currentFontSize + "px";
+            accessibilityContent.style.fontSize =
+                currentFontSize + "px";
+
         }
+
     });
 
     resetFont.addEventListener("click", () => {
+
         currentFontSize = 18;
-        summaryBox.style.fontSize = currentFontSize + "px";
+        accessibilityContent.style.fontSize =
+            currentFontSize + "px";
+
     });
 
     increaseFont.addEventListener("click", () => {
+
         if (currentFontSize < 26) {
+
             currentFontSize += 2;
-            summaryBox.style.fontSize = currentFontSize + "px";
+            accessibilityContent.style.fontSize =
+                currentFontSize + "px";
+
         }
+
     });
+
 }
 // ===== Theme Toggle =====
 
@@ -233,33 +253,91 @@ if (highContrastBtn) {
 
 const readAloud = document.getElementById("readAloud");
 
-if (readAloud && summaryBox) {
+if (readAloud) {
 
     readAloud.addEventListener("click", () => {
 
+        // Stop speech if already speaking
         if (speechSynthesis.speaking) {
+
             speechSynthesis.cancel();
             readAloud.textContent = "🔊 Read Aloud";
+
             return;
         }
 
-        const text = summaryBox.innerText;
+        let text = "";
+
+        // ===== Summary Page =====
+
+        if (summaryBox) {
+
+            text = summaryBox.innerText;
+
+        }
+
+        // ===== Quiz Page =====
+
+        else {
+
+            const questionText =
+                document.getElementById("questionText");
+
+            const optionsContainer =
+                document.getElementById("optionsContainer");
+
+            const feedback =
+                document.getElementById("feedback");
+
+            if (questionText && optionsContainer) {
+
+              text = questionText.innerText + ". \n\n";
+
+              const options =
+                optionsContainer.querySelectorAll(".option");
+
+                options.forEach((option, index) => {
+
+            text +=
+                `Option ${index + 1}: ${option.innerText}. \n\n`;
+
+            });
+                // Include feedback if answer has already been checked
+                if (feedback && feedback.innerText.trim()) {
+                    let feedbackText = feedback.innerText;
+
+                    feedbackText = feedbackText
+                    .replace(/❌/g, "")
+                    .replace(/✅/g, "");
+
+                text += feedbackText;
+}
+
+            }
+
+        }
 
         if (!text.trim()) {
             return;
         }
 
-        const speech = new SpeechSynthesisUtterance(text);
+        const speech =
+            new SpeechSynthesisUtterance(text);
 
-        speech.rate = 0.9;
+        speech.rate = 0.85;
         speech.pitch = 1;
 
         speech.onend = () => {
-            readAloud.textContent = "🔊 Read Aloud";
+
+            readAloud.textContent =
+                "🔊 Read Aloud";
+
         };
 
         speechSynthesis.speak(speech);
 
         readAloud.textContent = "⏹ Stop";
+
     });
+
 }
