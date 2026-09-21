@@ -197,6 +197,24 @@ if (decreaseFont && resetFont && increaseFont && accessibilityContent) {
     });
 
 }
+// ===== Line Spacing Controls =====
+
+const lineSpacing = document.getElementById("lineSpacing");
+
+if (lineSpacing && accessibilityContent) {
+
+    lineSpacing.addEventListener("change", () => {
+
+        const textElements =
+            accessibilityContent.querySelectorAll("p, li");
+
+        textElements.forEach((element) => {
+            element.style.lineHeight = lineSpacing.value;
+        });
+
+    });
+
+}
 // ===== Theme Toggle =====
 
 const themeToggle = document.getElementById("themeToggle");

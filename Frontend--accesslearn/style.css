@@ -338,6 +338,7 @@ body.dark-mode .question-number {
 
 .accessibility-tools {
     display: flex !important;
+    align-items: center;
     visibility: visible !important;
     opacity: 1 !important;
 }
@@ -441,6 +442,7 @@ body.high-contrast .option:focus {
     outline: 3px solid #ffff00;
     outline-offset: 3px;
 }
+
 /* Reading Ruler */
 .reading-ruler {
     position: fixed;
@@ -453,4 +455,34 @@ body.high-contrast .option:focus {
     pointer-events: none;
     z-index: 9999;
     display: none;
+}
+
+/* Line Spacing - Single Box */
+.line-spacing-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--primary);
+    color: white;
+    height: auto;
+    min-height: 0;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.line-spacing-box select {
+    background: transparent;
+    color: white;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.line-spacing-box select option {
+    background: white;
+    color: #333;
 }
