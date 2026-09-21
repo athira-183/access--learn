@@ -248,6 +248,24 @@ if (highContrastBtn) {
         document.body.classList.toggle("high-contrast");
     });
 }
+const readingRulerBtn = document.getElementById("readingRulerBtn");
+
+if (readingRulerBtn) {
+    const ruler = document.createElement("div");
+    ruler.className = "reading-ruler";
+    document.body.appendChild(ruler);
+
+    readingRulerBtn.addEventListener("click", () => {
+        ruler.style.display =
+            ruler.style.display === "none" ? "block" : "none";
+    });
+
+    document.addEventListener("mousemove", (event) => {
+        if (ruler.style.display !== "none") {
+            ruler.style.top = `${event.clientY - 20}px`;
+        }
+    });
+}
 
 // ===== Read Aloud =====
 
