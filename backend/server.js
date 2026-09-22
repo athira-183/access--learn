@@ -19,7 +19,7 @@ const openai = new OpenAI({
 const app = express();
 app.use(cors());
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const execFileAsync = promisify(execFile);
 
 app.use(express.json());

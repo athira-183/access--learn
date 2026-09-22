@@ -39,13 +39,12 @@ if (uploadButton && pdfUpload) {
         try {
 
             const response = await fetch(
-                "http://localhost:3000/api/upload",
+                "/api/upload",
                 {
-                    method: "POST",
+                     method: "POST",
                     body: formData
                 }
-            );
-
+        );
             const result = await response.json();
 
             if (!response.ok) {
@@ -53,7 +52,7 @@ if (uploadButton && pdfUpload) {
             }
         //Send extracted text to AI
             const aiResponse = await fetch(
-    "http://localhost:3000/api/ai/process",
+    "/api/ai/process",
     {
         method: "POST",
         headers: {
@@ -68,7 +67,7 @@ if (uploadButton && pdfUpload) {
 const aiResult = await aiResponse.json();
 // Send extracted text to AI for quiz generation
 const quizResponse = await fetch(
-    "http://localhost:3000/api/ai/quiz",
+    "/api/ai/quiz",
     {
         method: "POST",
         headers: {
