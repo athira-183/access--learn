@@ -23,7 +23,9 @@ const PORT = process.env.PORT || 3000;
 const execFileAsync = promisify(execFile);
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "../Frontend--accesslearn")));
+app.use(express.static(path.join(__dirname, "../Frontend--accesslearn"), {
+    index: "index.html"
+}));
 
 // Create uploads folders automatically
 if (!fs.existsSync("uploads")) {
